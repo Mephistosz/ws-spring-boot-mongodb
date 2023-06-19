@@ -30,4 +30,16 @@ build/
 !**/src/test/**/build/
 
 ### VS Code ###
-.vscode/
+.vscode/  
+
+# Arquivos de log
+*.log
+
+# Arquivos temporários
+*.tmp
+
+# Dependências do Maven
+/.m2/
+
+# Arquivos de saída do compilador
+*.class
