@@ -1,25 +1,27 @@
 package com.course.mongodb.resources;
 
-import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.course.mongodb.model.entities.User;
+import com.course.mongodb.service.UserService;
 
 @RestController
 @RequestMapping(value = "/users")
 public class UserResource {
 
+  @Autowired
+  private UserService service;
+
   @GetMapping
   public ResponseEntity<List<User>> findAll() {
 
-    List<User> list = Arrays.asList(
-        new User("1001", "Maria Brown", "maria@gmail.com"),
-        new User("1002", "Alex Green", "alex@gmail.com"));
+    List<User> list = service.findAll();
 
     return ResponseEntity.ok().body(list);
   }
