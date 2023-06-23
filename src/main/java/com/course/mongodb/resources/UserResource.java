@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.course.mongodb.model.dto.UserDTO;
+import com.course.mongodb.model.entities.Post;
 import com.course.mongodb.model.entities.User;
 import com.course.mongodb.service.UserService;
 
@@ -46,6 +47,14 @@ public class UserResource {
     return ResponseEntity.ok().body(new UserDTO(user));
   }
 
+  @GetMapping("/{id}/posts")
+  public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+
+    User user = userService.findById(id);
+
+    return ResponseEntity.ok().body(user.getPosts());
+  }
+
   @PostMapping
   public ResponseEntity<Void> insert(@RequestBody UserDTO userDTO) {
 
@@ -54,14 +63,6 @@ public class UserResource {
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userDTO.getId()).toUri();
 
     return ResponseEntity.created(uri).build();
-  }
-
-  @DeleteMapping("/{id}")
-  public ResponseEntity<Void> delete(@PathVariable String id) {
-
-    userService.deleteById(id);
-
-    return ResponseEntity.noContent().build();
   }
 
   @PutMapping("{id}")
@@ -74,4 +75,13 @@ public class UserResource {
 
     return ResponseEntity.noContent().build();
   }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> delete(@PathVariable String id) {
+
+    userService.deleteById(id);
+
+    return ResponseEntity.noContent().build();
+  }
+
 }
