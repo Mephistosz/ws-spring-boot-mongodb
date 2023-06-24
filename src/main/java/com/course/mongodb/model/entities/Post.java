@@ -2,11 +2,14 @@ package com.course.mongodb.model.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.course.mongodb.model.dto.UserDTO;
+import com.course.mongodb.model.dto.AuthorDTO;
+import com.course.mongodb.model.dto.CommentDTO;
 
 @Document(value = "post")
 public class Post implements Serializable {
@@ -18,12 +21,14 @@ public class Post implements Serializable {
   private Instant date;
   private String title;
   private String body;
-  private UserDTO author;
+  private AuthorDTO author;
+
+  private List<CommentDTO> comments = new ArrayList<>();
 
   public Post() {
   }
 
-  public Post(String id, Instant date, String title, String body, UserDTO author) {
+  public Post(String id, Instant date, String title, String body, AuthorDTO author) {
     this.id = id;
     this.date = date;
     this.title = title;
@@ -63,12 +68,24 @@ public class Post implements Serializable {
     this.body = body;
   }
 
-  public UserDTO getUser() {
+  public AuthorDTO getAuthor() {
     return author;
   }
 
-  public void setUser(UserDTO author) {
+  public void setAuthor(AuthorDTO author) {
     this.author = author;
+  }
+
+  public List<CommentDTO> getCommets() {
+    return comments;
+  }
+
+  public void addComment(CommentDTO comment) {
+    comments.add(comment);
+  }
+
+  public void removecomments(CommentDTO comment) {
+    comments.remove(comment);
   }
 
   @Override
